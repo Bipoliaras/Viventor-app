@@ -29,7 +29,7 @@ public class InitialDataLoader {
     clientRepository.saveAndFlush(Client.builder()
         .email("banker@gmail.com")
         .password(bCryptPasswordEncoder.encode("banker"))
-        .balance(balanceRepository.saveAndFlush(Balance.builder().money(BigDecimal.TEN).build()))
+        .balance(balanceRepository.saveAndFlush(Balance.builder().amount(BigDecimal.TEN).build()))
         .build());
 
   }

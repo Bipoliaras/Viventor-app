@@ -29,7 +29,7 @@ public class ClientController {
 
   private StatementService statementService;
 
-  @GetMapping
+  @GetMapping("/balance")
   public Balance getBalance(Authentication authentication) {
     return bankingService.getBalance(authentication.getName());
   }
@@ -55,11 +55,6 @@ public class ClientController {
   }
 
   @Autowired
-  public void setBankingService(BankingService bankingService) {
-    this.bankingService = bankingService;
-  }
-
-  @Autowired
   public void setSignupService(SignupService signupService) {
     this.signupService = signupService;
   }
@@ -68,5 +63,10 @@ public class ClientController {
   public void setStatementService(
       StatementService statementService) {
     this.statementService = statementService;
+  }
+
+  @Autowired
+  public void setBankingService(BankingService bankingService) {
+    this.bankingService = bankingService;
   }
 }

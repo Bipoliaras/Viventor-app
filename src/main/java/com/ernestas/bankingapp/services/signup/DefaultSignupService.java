@@ -36,7 +36,7 @@ public class DefaultSignupService implements SignupService {
       clientRepository.saveAndFlush(Client.builder()
           .email(signupRequest.getEmail())
           .password(bCryptPasswordEncoder.encode(signupRequest.getPassword()))
-          .balance(balanceRepository.saveAndFlush(Balance.builder().money(BigDecimal.ZERO).build()))
+          .balance(balanceRepository.saveAndFlush(Balance.builder().amount(BigDecimal.ZERO).build()))
           .build());
     } else {
       throw new RuntimeException("User with email already exists");

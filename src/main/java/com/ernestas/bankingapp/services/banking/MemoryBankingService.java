@@ -31,7 +31,7 @@ public class MemoryBankingService implements BankingService {
 
     Balance balance = client.getBalance();
 
-    balance.setMoney(balance.getMoney().add(depositRequest.getAmount()));
+    balance.setAmount(balance.getAmount().add(depositRequest.getAmount()));
 
     createStatement(client, StatementType.DEPOSIT, depositRequest.getAmount());
 
@@ -45,11 +45,11 @@ public class MemoryBankingService implements BankingService {
 
     Balance balance = client.getBalance();
 
-    if (balance.getMoney().subtract(withdrawRequest.getAmount()).compareTo(BigDecimal.ZERO) > 0) {
+    if (balance.getAmount().subtract(withdrawRequest.getAmount()).compareTo(BigDecimal.ZERO) > 0) {
 
       createStatement(client, StatementType.WITHDRAWAL, withdrawRequest.getAmount());
 
-      balance.setMoney(balance.getMoney().subtract(withdrawRequest.getAmount()));
+      balance.setAmount(balance.getAmount().subtract(withdrawRequest.getAmount()));
       balanceRepository.saveAndFlush(balance);
 
       return withdrawRequest.getAmount();

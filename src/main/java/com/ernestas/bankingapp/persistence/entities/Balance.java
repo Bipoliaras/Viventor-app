@@ -24,7 +24,7 @@ public class Balance {
   @JsonIgnore
   private Long id;
 
-  private BigDecimal money;
+  private BigDecimal amount;
 
   @OneToOne(mappedBy = "balance")
   @JsonIgnore
