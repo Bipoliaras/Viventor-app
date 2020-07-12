@@ -1,6 +1,7 @@
 package com.ernestas.bankingapp.services.signup;
 
 import com.ernestas.bankingapp.domain.SignupRequest;
+import com.ernestas.bankingapp.exception.BadRequestException;
 import com.ernestas.bankingapp.persistence.entities.Balance;
 import com.ernestas.bankingapp.persistence.entities.Client;
 import com.ernestas.bankingapp.persistence.repositories.BalanceRepository;
@@ -32,14 +33,18 @@ public class DefaultSignupService implements SignupService {
   @Override
   public void signup(SignupRequest signupRequest) {
 
-    if(!clientRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
+    if(!clientExists(signupRequest.getEmail())) {
       clientRepository.saveAndFlush(Client.builder()
           .email(signupRequest.getEmail())
           .password(bCryptPasswordEncoder.encode(signupRequest.getPassword()))
           .balance(balanceRepository.saveAndFlush(Balance.builder().amount(BigDecimal.ZERO).build()))
           .build());
     } else {
-      throw new RuntimeException("User with email already exists");
+      throw new BadRequestException("User with email already exists");
     }
+  }
+
+  private boolean clientExists(String email) {
+    return clientRepository.findByEmail(email).isPresent();
   }
 }

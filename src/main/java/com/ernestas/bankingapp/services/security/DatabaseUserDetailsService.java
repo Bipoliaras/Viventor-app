@@ -1,5 +1,6 @@
 package com.ernestas.bankingapp.services.security;
 
+import com.ernestas.bankingapp.exception.NotFoundException;
 import com.ernestas.bankingapp.persistence.entities.Client;
 import com.ernestas.bankingapp.persistence.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String s) {
-    Client client = clientRepository.findByEmail(s).orElseThrow(() -> new RuntimeException("Client not found"));
+    Client client = clientRepository.findByEmail(s).orElseThrow(() -> new NotFoundException("Client not found"));
 
     return User.builder()
         .username(client.getEmail())

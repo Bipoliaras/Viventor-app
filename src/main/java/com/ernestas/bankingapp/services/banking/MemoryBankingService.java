@@ -3,6 +3,8 @@ package com.ernestas.bankingapp.services.banking;
 import com.ernestas.bankingapp.domain.DepositRequest;
 import com.ernestas.bankingapp.domain.StatementType;
 import com.ernestas.bankingapp.domain.WithdrawRequest;
+import com.ernestas.bankingapp.exception.BadRequestException;
+import com.ernestas.bankingapp.exception.NotFoundException;
 import com.ernestas.bankingapp.persistence.entities.Statement;
 import com.ernestas.bankingapp.persistence.repositories.BalanceRepository;
 import com.ernestas.bankingapp.persistence.repositories.ClientRepository;
@@ -45,7 +47,7 @@ public class MemoryBankingService implements BankingService {
 
     Balance balance = client.getBalance();
 
-    if (balance.getAmount().subtract(withdrawRequest.getAmount()).compareTo(BigDecimal.ZERO) > 0) {
+    if (balance.getAmount().subtract(withdrawRequest.getAmount()).compareTo(BigDecimal.ZERO) >= 0) {
 
       createStatement(client, StatementType.WITHDRAWAL, withdrawRequest.getAmount());
 
@@ -55,7 +57,7 @@ public class MemoryBankingService implements BankingService {
       return withdrawRequest.getAmount();
 
     } else {
-      throw new RuntimeException("Current balance insufficient");
+      throw new BadRequestException("Client balance is insufficient for withdrawal");
     }
 
   }
@@ -79,7 +81,7 @@ public class MemoryBankingService implements BankingService {
 
   private Client getClient(String email) {
     return clientRepository.findByEmail(email)
-        .orElseThrow(() -> new RuntimeException("Client not found"));
+        .orElseThrow(() -> new NotFoundException("Client not found"));
   }
 
   @Autowired

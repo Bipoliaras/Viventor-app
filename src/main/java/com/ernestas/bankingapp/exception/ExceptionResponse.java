@@ -1,23 +1,23 @@
-package com.ernestas.bankingapp.domain;
+package com.ernestas.bankingapp.exception;
 
-import javax.validation.constraints.Email;
+import java.time.ZonedDateTime;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class SignupRequest {
+public class ExceptionResponse {
 
   @NotNull
-  private String password;
+  private String message;
 
+  private String debug;
   @NotNull
-  @Email(message = "Email should be valid")
-  private String email;
+  private ZonedDateTime timestamp;
 
 }
