@@ -21,7 +21,8 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String s) {
-    Client client = clientRepository.findByEmail(s).orElseThrow(() -> new NotFoundException("Client not found"));
+    Client client = clientRepository.findByEmail(s)
+        .orElseThrow(() -> new NotFoundException("Client not found"));
 
     return User.builder()
         .username(client.getEmail())

@@ -33,11 +33,12 @@ public class DefaultSignupService implements SignupService {
   @Override
   public void signup(SignupRequest signupRequest) {
 
-    if(!clientExists(signupRequest.getEmail())) {
+    if (!clientExists(signupRequest.getEmail())) {
       clientRepository.saveAndFlush(Client.builder()
           .email(signupRequest.getEmail())
           .password(bCryptPasswordEncoder.encode(signupRequest.getPassword()))
-          .balance(balanceRepository.saveAndFlush(Balance.builder().amount(BigDecimal.ZERO).build()))
+          .balance(
+              balanceRepository.saveAndFlush(Balance.builder().amount(BigDecimal.ZERO).build()))
           .build());
     } else {
       throw new BadRequestException("User with email already exists");

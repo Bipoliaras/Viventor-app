@@ -1,9 +1,9 @@
 package com.ernestas.bankingapp.services.helper;
 
-import com.ernestas.bankingapp.persistence.repositories.BalanceRepository;
-import com.ernestas.bankingapp.persistence.repositories.ClientRepository;
 import com.ernestas.bankingapp.persistence.entities.Balance;
 import com.ernestas.bankingapp.persistence.entities.Client;
+import com.ernestas.bankingapp.persistence.repositories.BalanceRepository;
+import com.ernestas.bankingapp.persistence.repositories.ClientRepository;
 import java.math.BigDecimal;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

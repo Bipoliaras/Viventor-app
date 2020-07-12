@@ -1,9 +1,11 @@
-package com.ernestas.bankingapp;
+package com.ernestas.bankingapp.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.ernestas.bankingapp.ITBase;
 import com.ernestas.bankingapp.domain.DepositRequest;
 import com.ernestas.bankingapp.domain.SignupRequest;
+import com.ernestas.bankingapp.domain.StatementType;
 import com.ernestas.bankingapp.domain.WithdrawRequest;
 import com.ernestas.bankingapp.persistence.entities.Balance;
 import com.ernestas.bankingapp.persistence.repositories.StatementRepository;
@@ -36,7 +38,7 @@ public class ClientIT extends ITBase {
   }
 
   @Test
-  public void givenClient_whenGetBalance_returnsCorrectStatements() {
+  public void givenClient_whenGetBalance_returnsCorrectBalance() {
 
     createUser();
 
@@ -103,6 +105,41 @@ public class ClientIT extends ITBase {
         .isEqualTo(new BigDecimal("9.00"));
 
     assertThat(statementRepository.findAll().size()).isEqualTo(1);
+
+  }
+  @Test
+  public void givenClientWithBalance_whenWithdrawMoneyAndGetStatements_ok() {
+
+    createUser();
+
+    RestAssured.given()
+        .accept(ContentType.JSON)
+        .contentType(ContentType.JSON)
+        .auth()
+        .preemptive()
+        .basic("banker@gmail.com", "banker")
+        .body(WithdrawRequest.builder()
+            .amount(BigDecimal.ONE)
+            .build())
+        .when()
+        .post("http://localhost:8080/clients/withdraw")
+        .then()
+        .statusCode(200);
+
+    assertThat(clientRepository.findByEmail("banker@gmail.com").get().getBalance().getAmount())
+        .isEqualTo(new BigDecimal("9.00"));
+
+    assertThat(statementRepository.findAll().size()).isEqualTo(1);
+
+    RestAssured.given()
+        .auth()
+        .preemptive()
+        .basic("banker@gmail.com", "banker")
+        .when()
+        .get("http://localhost:8080/clients/statements")
+        .then()
+        .statusCode(200)
+        .body("[0].statementType", Matchers.is(StatementType.WITHDRAWAL.name()));
 
   }
 

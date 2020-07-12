@@ -29,11 +29,6 @@ GET  | /clients/statements | Get client statements |
 
 * API will become available on http://localhost:8080/
 
-* API Swagger docs are available at http://localhost:8080/swagger-ui.html
-
-   * username - banker@gmail.com
-   * password - banker
-
 * H2 database panel is available at http://localhost:8080/h2-console/
 
    * jdbc url - jdbc:h2:mem:viventor

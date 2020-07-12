@@ -40,12 +40,14 @@ public class ClientController {
   }
 
   @PostMapping("/deposit")
-  public Balance depositMoney(Authentication authentication, @RequestBody @Valid DepositRequest depositRequest) {
+  public Balance depositMoney(Authentication authentication,
+      @RequestBody @Valid DepositRequest depositRequest) {
     return bankingService.depositMoney(authentication.getName(), depositRequest);
   }
 
   @PostMapping("/withdraw")
-  public BigDecimal withdrawMoney(Authentication authentication, @RequestBody @Valid WithdrawRequest withdrawRequest) {
+  public BigDecimal withdrawMoney(Authentication authentication,
+      @RequestBody @Valid WithdrawRequest withdrawRequest) {
     return bankingService.withdrawMoney(authentication.getName(), withdrawRequest);
   }
 

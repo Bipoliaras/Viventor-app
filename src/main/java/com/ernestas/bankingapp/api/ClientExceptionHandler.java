@@ -19,30 +19,30 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Component
 public class ClientExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(value={NotFoundException.class})
-  @ResponseStatus(value=HttpStatus.NOT_FOUND)
+  @ExceptionHandler(value = {NotFoundException.class})
+  @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public @ResponseBody
   ExceptionResponse handleNotFoundException(Exception e) {
     return createResponse(e);
   }
 
-  @ExceptionHandler(value={ConstraintViolationException.class})
-  @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(value = {ConstraintViolationException.class})
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public @ResponseBody
   ExceptionResponse handleConstraintException(ConstraintViolationException e) {
     return createResponse(new BadRequestException(
         e.getConstraintViolations().toString()));
   }
 
-  @ExceptionHandler(value={BadRequestException.class})
-  @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(value = {BadRequestException.class})
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public @ResponseBody
   ExceptionResponse handleBadRequestException(Exception e) {
     return createResponse(e);
   }
 
   @ExceptionHandler(Exception.class)
-  @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+  @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
   public @ResponseBody
   ExceptionResponse handleInternalServerException(Exception e) {
     return createResponse(new InternalServerException(e.getMessage()));

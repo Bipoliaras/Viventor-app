@@ -30,10 +30,10 @@ public class ITBase {
   protected int serverPort;
 
   @Autowired
-  ClientRepository clientRepository;
+  public ClientRepository clientRepository;
 
   @Autowired
-  BalanceRepository balanceRepository;
+  public BalanceRepository balanceRepository;
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder = new
       BCryptPasswordEncoder();
