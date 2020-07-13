@@ -1,4 +1,4 @@
-# viventor banking application
+# Viventor banking application
 Technical task for Viventor
 
 * Created Client API for signup and banking related actions
