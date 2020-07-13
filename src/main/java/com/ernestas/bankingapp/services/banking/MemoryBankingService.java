@@ -13,6 +13,7 @@ import com.ernestas.bankingapp.persistence.repositories.ClientRepository;
 import com.ernestas.bankingapp.persistence.repositories.StatementRepository;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class MemoryBankingService implements BankingService {
   private StatementRepository statementRepository;
 
   @Override
+  @Transactional
   public Balance depositMoney(String email, DepositRequest depositRequest) {
     Client client = getClient(email);
 
@@ -42,6 +44,7 @@ public class MemoryBankingService implements BankingService {
   }
 
   @Override
+  @Transactional
   public BigDecimal withdrawMoney(String email, WithdrawRequest withdrawRequest) {
     Client client = getClient(email);
 
